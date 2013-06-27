@@ -1,3 +1,7 @@
+proguard-project.txt
+libs/
+.settings
+
 # built application files
 *.apk
 *.ap_
