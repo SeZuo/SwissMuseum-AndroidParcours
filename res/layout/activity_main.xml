@@ -11,6 +11,10 @@
     
     <ListView
         android:id="@+id/maListe"
+
+        android:dividerHeight="4sp"
+        android:divider="@drawable/divider_shadow"
+
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
     </ListView>
