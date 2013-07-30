@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -29,8 +30,8 @@ public class CardCursorAdapter extends SimpleCursorAdapter {
             MenusContract.COLUMN_NAME_TITLE,
             MenusContract.COLUMN_NAME_DESCRIPTION,
 //			MenusContract.COLUMN_NAME_THUMB_IMG_URL,
-            MenusContract.COLUMN_NAME_IMG_URL //,
-//			AffiliationsContract.COLUMN_NAME_PAGE_ID,
+            MenusContract.COLUMN_NAME_IMG_URL,
+			AffiliationsContract.COLUMN_NAME_PAGE_ID //,
 //            AffiliationsContract.COLUMN_TRIMMED_NAME_ORDER
     };
 
@@ -75,6 +76,22 @@ public class CardCursorAdapter extends SimpleCursorAdapter {
 
         TextView descriptionView = (TextView) v.findViewById(R.id.card_description);
         descriptionView.setText(description);
+
+        final String link = getCursor().getString(
+                getCursor().getColumnIndex(
+                        AffiliationsContract.COLUMN_NAME_PAGE_ID));
+
+        // add the onclick listener
+        v.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(
+                        context,
+                        link,
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         return(v);
     }
