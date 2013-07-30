@@ -2,6 +2,7 @@ package ch.sebastienzurfluh.swissmuseum.panneauinteractif.model;
 
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.R;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.MainActivity;
+import ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.PageActivity;
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.model.DataProviderContract.*;
 
 /**
@@ -35,13 +38,15 @@ public class CardCursorAdapter extends SimpleCursorAdapter {
 //            AffiliationsContract.COLUMN_TRIMMED_NAME_ORDER
     };
 
-    public CardCursorAdapter(Context context, Cursor cursor) {
+    public static int[] toFields = new int[] {R.id.card_title, R.id.card_description, R.id.card_image};
+
+    public CardCursorAdapter(Context context) {
         super(
                 context,
                 R.layout.card,
-                cursor,
+                null,
                 fromColumns,
-                new int[] {R.id.card_title, R.id.card_description},
+                toFields,
                 0);
         this.context = context;
     }
@@ -77,7 +82,7 @@ public class CardCursorAdapter extends SimpleCursorAdapter {
         TextView descriptionView = (TextView) v.findViewById(R.id.card_description);
         descriptionView.setText(description);
 
-        final String link = getCursor().getString(
+        final String pageId = getCursor().getString(
                 getCursor().getColumnIndex(
                         AffiliationsContract.COLUMN_NAME_PAGE_ID));
 
@@ -85,10 +90,10 @@ public class CardCursorAdapter extends SimpleCursorAdapter {
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(
-                        context,
-                        link,
-                        Toast.LENGTH_SHORT).show();
+                Intent showPage = new Intent(context, PageActivity.class);
+                showPage.putExtra("pageId", pageId);
+
+                context.startActivity(showPage);
             }
         });
 

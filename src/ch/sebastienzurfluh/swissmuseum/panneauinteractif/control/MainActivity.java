@@ -43,10 +43,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 
 		// add a cursor adapter to the view, it will be updated with the right content when it is
 		// available (see onLoadFinished)
-		adapter = new CardCursorAdapter(
-				this,
-				null
-				);
+		adapter = new CardCursorAdapter(this);
 
 		ListView listView = (ListView) findViewById(R.id.maListe);
 		listView.setAdapter(adapter);
