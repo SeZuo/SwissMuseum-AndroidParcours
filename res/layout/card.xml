@@ -4,12 +4,11 @@
               android:id="@+id/card"
 
               android:background="@drawable/card"
-              android:padding="10sp"
-              android:layout_margin="10sp"
 
+              android:padding="10sp"
 
               android:orientation="vertical"
-              android:layout_width="match_parent"
+              android:layout_width="fill_parent"
               android:layout_height="match_parent"
               android:dividerPadding="10dp"
               android:clickable="true">
@@ -20,6 +19,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:layout_gravity="center"/>
 
     <TextView
