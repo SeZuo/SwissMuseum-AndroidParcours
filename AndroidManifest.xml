@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-                android:name="ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.PageActivity"
+                android:name=".control.PageActivity"
                 android:label="@string/app_name"
                 android:parentActivityName="ch.sebastienzurfluh.swissmuseum.control.MainActivity" >
             <meta-data
