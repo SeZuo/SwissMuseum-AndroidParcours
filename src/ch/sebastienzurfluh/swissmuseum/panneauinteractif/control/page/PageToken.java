@@ -29,11 +29,11 @@ package ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.page;
 public class PageToken {
 	private boolean isText = false;
 	private boolean isResource = false;
-	private ResourceWidget resourceWidget;
+	private int resourceReference;
 	private String text;
 
-	public PageToken(ResourceWidget resourceWidget) {
-		setResourceWidget(resourceWidget);
+	public PageToken(int resourceReference) {
+		setResourceReference(resourceReference);
 	}
 	
 	public PageToken(String text) {
@@ -48,8 +48,8 @@ public class PageToken {
 		return isResource;
 	}
 	
-	private void setResourceWidget(ResourceWidget resourceWidget) {
-		this.resourceWidget = resourceWidget;
+	private void setResourceReference(int resourceReference) {
+		this.resourceReference = resourceReference;
 		this.isResource = true;
 	}
 	
@@ -58,8 +58,8 @@ public class PageToken {
 		this.isText = true;
 	}
 
-	public ResourceWidget getResourceWidget() {
-		return resourceWidget;
+	public int getResourceReference() {
+		return resourceReference;
 	}
 	
 	public String getText() {

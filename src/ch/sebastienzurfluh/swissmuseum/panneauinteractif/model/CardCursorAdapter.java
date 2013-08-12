@@ -3,7 +3,6 @@ package ch.sebastienzurfluh.swissmuseum.panneauinteractif.model;
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.R;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -12,11 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
 
-import ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.MainActivity;
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.PageActivity;
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.model.DataProviderContract.*;
 

@@ -22,7 +22,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	/////
 	private static final String AUTHORITY = "ch.sebastienzurfluh.swissmuseumguides.contentprovider";
 	private static final String CONTENT_URI_ROOT = "content://" + AUTHORITY + "/";
-	private static final String MENUS_LISTALLPAGEMENUS = "menus/listAll";
+	private static final String MENUS_LISTALLPAGEMENUS = "menus";
 
 
 	private CardCursorAdapter adapter;

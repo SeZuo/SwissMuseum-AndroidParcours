@@ -1,20 +1,17 @@
 package ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.page;
 
-/**
- * Created by sebe on 7/31/13.
- */
 import java.util.LinkedList;
 
 public class PageParser {
     private static final String IMG_BALISE_START = "[img]";
     private static final String IMG_BALISE_END = "[/img]";
 
-    public LinkedList<PageToken> parse(String text) {
+    public static LinkedList<PageToken> parse(String text) {
         System.out.println("TextParser: parsing...");
         return parseResources(text);
     }
 
-    private LinkedList<PageToken> parseResources(String parsing) {
+    private static LinkedList<PageToken> parseResources(String parsing) {
         LinkedList<PageToken> tokenList = new LinkedList<PageToken>();
         StringBuilder parsed = new StringBuilder();
 
@@ -33,17 +30,12 @@ public class PageParser {
                 tokenList.add(textParsedSoFar);
                 parsed = new StringBuilder();
 
-                DataReference neededResource = new DataReference(
-                        DataType.RESOURCE,
-                        Integer.parseInt(
-                                parsing.substring(
-                                        imgDefBegin + IMG_BALISE_START.length(),
-                                        imgDefEnd)));
+                int resourceReference = Integer.parseInt(
+                        parsing.substring(
+                                imgDefBegin + IMG_BALISE_START.length(),
+                                imgDefEnd));
 
-                tokenList.add(new PageToken(new ResourceWidget(
-                        neededResource,
-                        pageChangeEventBus,
-                        model)));
+                tokenList.add(new PageToken(resourceReference));
 
 
                 parsing = parsing.substring(imgDefEnd + IMG_BALISE_END.length());

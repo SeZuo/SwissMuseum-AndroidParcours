@@ -10,14 +10,18 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
-import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.LinkedList;
 
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.R;
+import ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.page.PageParser;
+import ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.page.PageToken;
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.model.DataProviderContract;
+import ch.sebastienzurfluh.swissmuseum.panneauinteractif.model.GalleryCursorAdapter;
+import ch.sebastienzurfluh.swissmuseum.panneauinteractif.view.ExpandableHeightGridView;
 
 public class PageActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 	
@@ -31,6 +35,8 @@ public class PageActivity extends Activity implements LoaderManager.LoaderCallba
 
     private final String appRelativeDir = "Android/data/ch.sebastienzurfluh.swissmuseumguides/files/";
 
+    private int loaderId = 0;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,7 +49,7 @@ public class PageActivity extends Activity implements LoaderManager.LoaderCallba
 		// Get the data from the model
 		// Update the cursor, then update the view
 
-		getLoaderManager().initLoader(0, getIntent().getExtras(), this);
+		getLoaderManager().initLoader(loaderId++, getIntent().getExtras(), this);
 	}
 
 	@Override
@@ -90,8 +96,49 @@ public class PageActivity extends Activity implements LoaderManager.LoaderCallba
         TextView titleView = (TextView) findViewById(R.id.page_title);
         titleView.setText(title);
 
+
+
         TextView descriptionView = (TextView) findViewById(R.id.page_content);
-        descriptionView.setText(description);
+
+        GalleryCursorAdapter adapter = null;
+        LinkedList<PageToken> tokenisedContent = PageParser.parse(description);
+        descriptionView.setText("");
+        for (PageToken pageToken : tokenisedContent) {
+            if (pageToken.isResource()) {
+                // determine what type or resource this is
+                // act according to the resource type
+
+                // let's say it's an image
+
+                // launch an async task to get the data from the db
+                // when the data comes back, add it to the view.
+                // this is the same as a resource widget in the original code
+                // except the element is not added to the view directly.
+
+                ExpandableHeightGridView galleryView =
+                        (ExpandableHeightGridView) findViewById(R.id.resource_gallery);
+
+                if (adapter==null)
+                    adapter = new GalleryCursorAdapter(this);
+                galleryView.setAdapter(adapter);
+                galleryView.setExpanded(true);
+
+
+                Bundle bundleArgs = new Bundle();
+                bundleArgs.putInt("resourceId", pageToken.getResourceReference());
+
+                getLoaderManager().initLoader(loaderId++,
+                        bundleArgs,
+                        new ResourceLoaderManager(this, adapter));
+
+
+                // We should add some text link right here in the text as reference. But only if
+                // there is more text!
+            } else if (pageToken.isText()) {
+                // add the text to the content.
+                descriptionView.append(pageToken.getText());
+            }
+        }
     }
 
 	@Override
