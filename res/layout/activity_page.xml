@@ -28,8 +28,6 @@
                     android:layout_height="wrap_content"
 
                     android:padding="20sp"
-
-                    android:text="Large Text"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:layout_gravity="left|center_vertical"/>
 

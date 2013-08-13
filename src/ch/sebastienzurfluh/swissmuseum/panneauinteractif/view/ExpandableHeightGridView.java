@@ -38,7 +38,7 @@ public class ExpandableHeightGridView extends GridView {
             super.onMeasure(widthMeasureSpec, expandSpec);
 
             ViewGroup.LayoutParams params = getLayoutParams();
-            params.height = getMeasuredHeight();
+            params.height = getMeasuredHeight() + 2;
         } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
