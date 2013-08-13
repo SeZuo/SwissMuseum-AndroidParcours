@@ -2,7 +2,7 @@ package ch.sebastienzurfluh.swissmuseum.panneauinteractif.control;
 
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.R;
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.model.CardCursorAdapter;
-import ch.sebastienzurfluh.swissmuseum.panneauinteractif.model.DataProviderContract.*;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -12,7 +12,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.view.Menu;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 public class MainActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor> {
 	
@@ -22,7 +21,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	/////
 	private static final String AUTHORITY = "ch.sebastienzurfluh.swissmuseumguides.contentprovider";
 	private static final String CONTENT_URI_ROOT = "content://" + AUTHORITY + "/";
-	private static final String MENUS_LISTALLPAGEMENUS = "menus";
+	private static final String MENUS_LISTALLGROUPS = "menus/groups";
 
 
 	private CardCursorAdapter adapter;
@@ -60,7 +59,7 @@ public class MainActivity extends Activity implements LoaderManager.LoaderCallba
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 		return new CursorLoader(
 				this,
-				Uri.parse(CONTENT_URI_ROOT + MENUS_LISTALLPAGEMENUS),
+				Uri.parse(CONTENT_URI_ROOT + MENUS_LISTALLGROUPS),
                 null,
 				null,
 				null,

@@ -13,6 +13,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.control.PageActivity;
 import ch.sebastienzurfluh.swissmuseum.panneauinteractif.model.DataProviderContract.*;
@@ -25,13 +27,13 @@ public class CardCursorAdapter extends SimpleCursorAdapter {
 
     private final String appRelativeDir = "Android/data/ch.sebastienzurfluh.swissmuseumguides/files/";
 
-    public static String[] fromColumns = {
+    public String[] fromColumns = {
 //            MenusContract._ID,
             MenusContract.COLUMN_NAME_TITLE,
             MenusContract.COLUMN_NAME_DESCRIPTION,
 //			MenusContract.COLUMN_NAME_THUMB_IMG_URL,
             MenusContract.COLUMN_NAME_IMG_URL,
-			AffiliationsContract.COLUMN_NAME_PAGE_ID //,
+			"",
 //            AffiliationsContract.COLUMN_TRIMMED_NAME_ORDER
     };
 
@@ -42,7 +44,7 @@ public class CardCursorAdapter extends SimpleCursorAdapter {
                 context,
                 R.layout.card,
                 null,
-                fromColumns,
+                new String[0],// fromColumns,
                 toFields,
                 0);
         this.context = context;
@@ -79,16 +81,27 @@ public class CardCursorAdapter extends SimpleCursorAdapter {
         TextView descriptionView = (TextView) v.findViewById(R.id.card_description);
         descriptionView.setText(description);
 
-        final String pageId = getCursor().getString(
-                getCursor().getColumnIndex(
-                        AffiliationsContract.COLUMN_NAME_PAGE_ID));
+        final String pageOrGroupId;
+        if (Arrays.asList(
+                getCursor().getColumnNames()).contains(AffiliationsContract.COLUMN_NAME_PAGE_ID)) {
+
+            pageOrGroupId = getCursor().getString(
+                    getCursor().getColumnIndex(
+                            AffiliationsContract.COLUMN_NAME_PAGE_ID));
+        } else {
+            // this is the menu of a group
+
+            pageOrGroupId = getCursor().getString(
+                    getCursor().getColumnIndex(
+                            AffiliationsContract.COLUMN_NAME_GROUP_ID));
+        }
 
         // add the onclick listener
         v.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent showPage = new Intent(context, PageActivity.class);
-                showPage.putExtra("pageId", pageId);
+                showPage.putExtra("pageId", pageOrGroupId);
 
                 context.startActivity(showPage);
             }
